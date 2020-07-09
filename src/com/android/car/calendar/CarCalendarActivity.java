@@ -48,13 +48,18 @@ public class CarCalendarActivity extends FragmentActivity {
     private final Multimap<String, Runnable> mPermissionToCallbacks = HashMultimap.create();
 
     // Allows tests to replace certain dependencies.
-    @VisibleForTesting Dependencies mDependencies = new Dependencies(
-            Locale.getDefault(), Clock.systemDefaultZone(), getContentResolver());
+    @VisibleForTesting Dependencies mDependencies;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         maybeEnableStrictMode();
+
+        // Tests can set fake dependencies before onCreate.
+        if (mDependencies == null) {
+            mDependencies = new Dependencies(
+                    Locale.getDefault(), Clock.systemDefaultZone(), getContentResolver());
+        }
 
         CarCalendarViewModel carCalendarViewModel =
                 new ViewModelProvider(
