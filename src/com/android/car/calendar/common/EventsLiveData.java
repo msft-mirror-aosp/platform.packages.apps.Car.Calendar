@@ -44,6 +44,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -59,6 +60,9 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
     private static final String TAG = "CarCalendarEventsLiveData";
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
+    // The duration to delay before updating the value to reduce the frequency of changes.
+    private static final int UPDATE_DELAY_MILLIS = 1000;
+
     // Sort events by start date and title.
     private static final Comparator<Event> EVENT_COMPARATOR =
             Comparator.comparing(Event::getDayStartInstant).thenComparing(Event::getTitle);
@@ -68,6 +72,7 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
     private final ContentResolver mContentResolver;
     private final EventDescriptions mEventDescriptions;
     private final EventLocations mLocations;
+    private final Runnable mUpdateRunnable = this::updateIfChanged;
 
     /** The event instances cursor is a field to allow observers to be managed. */
     @Nullable private Cursor mEventsCursor;
@@ -89,8 +94,12 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
     }
 
     /** Refreshes the event instances and sets the new value which notifies observers. */
-    private void update() {
-        postValue(getEventsUntilTomorrow());
+    private void updateIfChanged() {
+        ImmutableList<Event> latest = getEventsUntilTomorrow();
+        ImmutableList<Event> current = getValue();
+        if (!Objects.equals(latest, current)) {
+            postValue(latest);
+        }
     }
 
     /** Queries the content provider for event instances. */
@@ -167,13 +176,19 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
                     @Override
                     public void onChange(boolean selfChange) {
                         if (DEBUG) Log.d(TAG, "Events changed");
-                        update();
+                        updateWithDelay();
                     }
                 };
         cursor.setNotificationUri(mContentResolver, eventInstanceUri);
         cursor.registerContentObserver(mEventInstancesObserver);
 
         return cursor;
+    }
+
+    private void updateWithDelay() {
+        // Do not update the events until there have been no changes for a given duration.
+        mBackgroundHandler.removeCallbacks(mUpdateRunnable);
+        mBackgroundHandler.postDelayed(mUpdateRunnable, UPDATE_DELAY_MILLIS);
     }
 
     /** Can return multiple events for a single cursor row when an event spans multiple days. */
@@ -264,11 +279,11 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         mBackgroundHandler.post(this::tearDownCursor);
     }
 
-    /** Calls {@link #update()} every minute to keep the displayed time range correct. */
+    /** Calls {@link #updateIfChanged()} every minute to keep the displayed time range correct. */
     private void updateAndScheduleNext() {
         if (DEBUG) Log.d(TAG, "Update and schedule");
         if (hasActiveObservers()) {
-            update();
+            updateIfChanged();
             ZonedDateTime now = ZonedDateTime.now(mClock);
             ZonedDateTime truncatedNowTime = now.truncatedTo(MINUTES);
             ZonedDateTime updateTime = truncatedNowTime.plus(1, MINUTES);
