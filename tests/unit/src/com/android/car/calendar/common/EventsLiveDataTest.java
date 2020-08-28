@@ -18,10 +18,11 @@ package com.android.car.calendar.common;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static java.time.temporal.ChronoUnit.HOURS;
@@ -161,6 +162,28 @@ public class EventsLiveDataTest {
     }
 
     @Test
+    public void addObserver_observerCalled() throws InterruptedException {
+        // Observing triggers content to be read.
+        Observer<ImmutableList<Event>> mockObserver = mock(Observer.class);
+        runOnMain(() -> mEventsLiveData.observeForever(mockObserver));
+
+        // TODO(jdp) This method of verifying an async behaviour is easier to read.
+        verify(mockObserver, timeout(1000).times(1)).onChanged(any());
+    }
+
+    @Test
+    public void addTwoObservers_bothObserversCalled() throws InterruptedException {
+        // Observing triggers content to be read.
+        Observer<ImmutableList<Event>> mockObserver1 = mock(Observer.class);
+        runOnMain(() -> mEventsLiveData.observeForever(mockObserver1));
+        Observer<ImmutableList<Event>> mockObserver2 = mock(Observer.class);
+        runOnMain(() -> mEventsLiveData.observeForever(mockObserver2));
+
+        verify(mockObserver1, timeout(1000).times(1)).onChanged(any());
+        verify(mockObserver2, timeout(1000).times(1)).onChanged(any());
+    }
+
+    @Test
     public void removeObserver_contentNotObserved() throws InterruptedException {
         // Observing triggers content to be read.
         Observer<ImmutableList<Event>> observer = (unused) -> { /* Do nothing */ };
@@ -178,8 +201,8 @@ public class EventsLiveDataTest {
     public void addObserver_oneEventResult() throws InterruptedException {
         mTestContentProvider.addRow(buildTestRowWithDuration(CURRENT_DATE_TIME, 1));
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        // Expect onChanged to be called for when the data is read.
+        CountDownLatch latch = new CountDownLatch(1);
 
         // Must add observer on main thread.
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
@@ -208,11 +231,11 @@ public class EventsLiveDataTest {
     public void notifyDataChange_dataNotChanged_onChangedNotCalled() throws InterruptedException {
         mTestContentProvider.addRow(buildTestRow());
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch initializeCountdownLatch = new CountDownLatch(2);
+        // Expect onChanged to be called for when the data is read.
+        CountDownLatch initializeCountdownLatch = new CountDownLatch(1);
 
-        // Expect the same init callbacks as above but with an extra when the data is updated.
-        CountDownLatch changeCountdownLatch = new CountDownLatch(3);
+        // Expect the same callback as above but with an extra when the data is updated.
+        CountDownLatch changeCountdownLatch = new CountDownLatch(2);
 
         // Must add observer on main thread.
         runOnMain(
@@ -238,11 +261,11 @@ public class EventsLiveDataTest {
     public void notifyDataChange_dataChanged_onChangedCalled() throws InterruptedException {
         mTestContentProvider.addRow(buildTestRow());
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch initializeCountdownLatch = new CountDownLatch(2);
+        // Expect onChanged to be called for when the data is read.
+        CountDownLatch initializeCountdownLatch = new CountDownLatch(1);
 
-        // Expect the same init callbacks as above but with an extra when the data is updated.
-        CountDownLatch changeCountdownLatch = new CountDownLatch(3);
+        // Expect the same callback as above but with an extra when the data is updated.
+        CountDownLatch changeCountdownLatch = new CountDownLatch(2);
 
         // Must add observer on main thread.
         runOnMain(
@@ -270,7 +293,7 @@ public class EventsLiveDataTest {
         mTestHandler.setExpectedMessageCount(2);
 
         // Must add observer on main thread.
-        runOnMain(() -> mEventsLiveData.observeForever((unused) -> {/* Do nothing */ }));
+        runOnMain(() -> mEventsLiveData.observeForever((unused) -> { /* Do nothing */ }));
 
         mTestHandler.awaitExpectedMessages();
 
@@ -283,8 +306,8 @@ public class EventsLiveDataTest {
         mTestContentProvider.mAddFakeCalendar = false;
         mTestContentProvider.addRow(buildTestRow());
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        // Expect onChanged to be called for when the data is read.
+        CountDownLatch latch = new CountDownLatch(1);
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
 
         // Wait for the data to be read on the background thread.
@@ -307,8 +330,7 @@ public class EventsLiveDataTest {
         // Replace the default event with one that lasts 24 hours.
         mTestContentProvider.addRow(buildTestRowWithDuration(CURRENT_DATE_TIME, 24));
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        CountDownLatch latch = new CountDownLatch(1);
 
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
 
@@ -325,8 +347,7 @@ public class EventsLiveDataTest {
         int hours = 48;
         mTestContentProvider.addRow(buildTestRowWithDuration(CURRENT_DATE_TIME, hours));
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        CountDownLatch latch = new CountDownLatch(1);
 
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
 
@@ -349,8 +370,7 @@ public class EventsLiveDataTest {
         mTestContentProvider.addRow(buildTestRowWithDuration(twoHoursAfterCurrentTime, 1));
         mTestContentProvider.addRow(buildTestRowWithDuration(CURRENT_DATE_TIME, 1));
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        CountDownLatch latch = new CountDownLatch(1);
 
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
 
@@ -372,8 +392,8 @@ public class EventsLiveDataTest {
         mTestContentProvider.addRow(buildTestRowWithTitle("Title A"));
         mTestContentProvider.addRow(buildTestRowWithTitle("Title C"));
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        // Expect onChanged to be called for when the data is read.
+        CountDownLatch latch = new CountDownLatch(1);
 
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
 
@@ -394,8 +414,8 @@ public class EventsLiveDataTest {
                 CURRENT_DATE_TIME.withZoneSameLocal(ZoneId.of("UTC")).truncatedTo(ChronoUnit.DAYS);
         mTestContentProvider.addRow(buildTestRowAllDay(utcMidnightStart));
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        // Expect onChanged to be called when the data is read.
+        CountDownLatch latch = new CountDownLatch(1);
 
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
 
@@ -418,8 +438,8 @@ public class EventsLiveDataTest {
         // Set the time to 23:XX in the BERLIN_ZONE_ID which will be after the event end time.
         mTestClock.setTime(CURRENT_DATE_TIME.with(ChronoField.HOUR_OF_DAY, 23));
 
-        // Expect onChanged to be called for when we start to observe and when the data is read.
-        CountDownLatch latch = new CountDownLatch(2);
+        // Expect onChanged to be called for when the data is read.
+        CountDownLatch latch = new CountDownLatch(1);
 
         runOnMain(() -> mEventsLiveData.observeForever((value) -> latch.countDown()));
 
@@ -603,10 +623,7 @@ public class EventsLiveDataTest {
     }
 
     static long addHoursAndTruncate(ZonedDateTime dateTime, int hours) {
-        return dateTime.truncatedTo(HOURS)
-                .plus(Duration.ofHours(hours))
-                .toInstant()
-                .toEpochMilli();
+        return dateTime.truncatedTo(HOURS).plus(Duration.ofHours(hours)).toInstant().toEpochMilli();
     }
 
     static Object[] buildTestRowWithDuration(ZonedDateTime startDateTime, int eventDurationHours) {
