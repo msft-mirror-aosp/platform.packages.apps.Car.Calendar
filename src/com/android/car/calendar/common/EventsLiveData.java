@@ -31,7 +31,9 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Instances;
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
@@ -54,6 +56,8 @@ import javax.annotation.Nullable;
  * Provider</a>.
  *
  * <p>While in the active state the content provider is observed for changes.
+ *
+ * <p>When the value given to the observer is null it signals that there are no calendars.
  */
 public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
@@ -72,12 +76,15 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
     private final ContentResolver mContentResolver;
     private final EventDescriptions mEventDescriptions;
     private final EventLocations mLocations;
-    private final Runnable mUpdateRunnable = this::updateIfChanged;
+    private final Runnable mUpdateIfChangedRunnable = this::updateIfChanged;
 
     /** The event instances cursor is a field to allow observers to be managed. */
     @Nullable private Cursor mEventsCursor;
 
     @Nullable private ContentObserver mEventInstancesObserver;
+
+    // This can be updated on the background thread but read from any thread.
+    private volatile boolean mValueUpdated;
 
     public EventsLiveData(
             Clock clock,
@@ -85,7 +92,6 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
             ContentResolver contentResolver,
             EventDescriptions eventDescriptions,
             EventLocations locations) {
-        super(ImmutableList.of());
         mClock = clock;
         mBackgroundHandler = backgroundHandler;
         mContentResolver = contentResolver;
@@ -95,10 +101,14 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
     /** Refreshes the event instances and sets the new value which notifies observers. */
     private void updateIfChanged() {
+        Log.d(TAG, "Update if changed");
         ImmutableList<Event> latest = getEventsUntilTomorrow();
         ImmutableList<Event> current = getValue();
-        if (!Objects.equals(latest, current)) {
+
+        // Always post the first value even if it is null.
+        if (!mValueUpdated || !Objects.equals(latest, current)) {
             postValue(latest);
+            mValueUpdated = true;
         }
     }
 
@@ -187,8 +197,9 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
     private void updateWithDelay() {
         // Do not update the events until there have been no changes for a given duration.
-        mBackgroundHandler.removeCallbacks(mUpdateRunnable);
-        mBackgroundHandler.postDelayed(mUpdateRunnable, UPDATE_DELAY_MILLIS);
+        Log.d(TAG, "Events changed");
+        mBackgroundHandler.removeCallbacks(mUpdateIfChangedRunnable);
+        mBackgroundHandler.postDelayed(mUpdateIfChangedRunnable, UPDATE_DELAY_MILLIS);
     }
 
     /** Can return multiple events for a single cursor row when an event spans multiple days. */
@@ -277,6 +288,7 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         if (DEBUG) Log.d(TAG, "Live data inactive");
         mBackgroundHandler.post(this::cancelScheduledUpdate);
         mBackgroundHandler.post(this::tearDownCursor);
+        mValueUpdated = false;
     }
 
     /** Calls {@link #updateIfChanged()} every minute to keep the displayed time range correct. */
