@@ -17,12 +17,12 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Calendar"</string>
-    <string name="no_dialler" msgid="1448265958659890310">"Non hai ningún marcador dispoñible"</string>
-    <string name="no_events" msgid="2454460886004475314">"Non hai ningún evento planificado. Tes tempo libre."</string>
-    <string name="no_calendars" msgid="5059614627806215716">"É posible que se estea iniciando Calendar ou que teñas que comprobar a configuración da aplicación complementaria"</string>
-    <string name="all_day_event" msgid="5817490740700803034">"Todo o día"</string>
+    <string name="no_dialler" msgid="1448265958659890310">"કોઈ ડાયલર ઉપલબ્ધ નથી"</string>
+    <string name="no_events" msgid="2454460886004475314">"કોઈ ઇવેન્ટ શેડ્યૂલ કરેલી નથી. તમે મુક્ત છો!"</string>
+    <string name="no_calendars" msgid="5059614627806215716">"Calendar શરુ થઈ રહ્યું હોય તેમ બની શકે છે અથવા તમારે સાથી ઍપમાં જઈને કદાચ તમારા સેટિંગ ચેક કરવાની જરૂર પડી શકે છે"</string>
+    <string name="all_day_event" msgid="5817490740700803034">"આખો દિવસ"</string>
     <!-- no translation found for phone_number (3879925006862072135) -->
     <skip />
-    <string name="phone_number_with_pin" msgid="6760582665093825412">"PIN de <xliff:g id="NUMBER">%1$s</xliff:g>: <xliff:g id="PIN_0">%2$s</xliff:g>"</string>
+    <string name="phone_number_with_pin" msgid="6760582665093825412">"<xliff:g id="NUMBER">%1$s</xliff:g> પિન: <xliff:g id="PIN_0">%2$s</xliff:g>"</string>
     <!-- no translation found for all_day_title (3520731243145895938) -->
 </resources>
