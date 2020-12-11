@@ -30,6 +30,7 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -171,8 +172,8 @@ class EventCalendarItem implements CalendarItem {
 
         private final TextView mTitleView;
         private final TextView mDescriptionView;
-        private final DrawableStateImageButton mPrimaryActionButton;
-        private final DrawableStateImageButton mSecondaryActionButton;
+        private final ImageButton mPrimaryActionButton;
+        private final ImageButton mSecondaryActionButton;
         private final int mCalendarIndicatorSize;
         private final int mCalendarIndicatorPadding;
         @ColorInt private final int mTimeTextColor;
