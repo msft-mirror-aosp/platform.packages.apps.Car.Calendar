@@ -17,7 +17,6 @@
 package com.android.car.calendar;
 
 import android.Manifest;
-import android.annotation.ColorInt;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.InsetDrawable;
@@ -34,6 +33,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
