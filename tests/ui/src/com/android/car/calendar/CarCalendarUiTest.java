@@ -35,6 +35,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.provider.CalendarContract;
+import android.telephony.TelephonyManager;
 import android.test.mock.MockContentProvider;
 import android.test.mock.MockContentResolver;
 
@@ -128,7 +129,8 @@ public class CarCalendarUiTest {
                 new TestCalendarContentProvider(context);
         mockContentResolver.addProvider(CalendarContract.AUTHORITY, testCalendarContentProvider);
         activity.mDependencies =
-                new CarCalendarActivity.Dependencies(LOCALE, fixedTimeClock, mockContentResolver);
+                new CarCalendarActivity.Dependencies(LOCALE, fixedTimeClock, mockContentResolver,
+                        activity.getSystemService(TelephonyManager.class));
     }
 
     private void observeEventsLiveData(CarCalendarActivity activity) {
