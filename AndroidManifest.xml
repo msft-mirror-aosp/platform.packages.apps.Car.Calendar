@@ -42,14 +42,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Work around b/113294940.  -->
-        <provider
-            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-            tools:replace="android:authorities"
-            android:authorities="${applicationId}.lifecycle-tests"
-            android:exported="false"
-            android:multiprocess="true" />
-
     </application>
 
 </manifest>
