@@ -38,4 +38,5 @@ android_test {
         "android.test.mock.stubs",
         "android.test.runner.stubs",
     ],
+    test_suites: ["automotive-general-tests"],
 }
