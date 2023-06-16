@@ -32,10 +32,9 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.Formatter;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /** App specific text formatting utility. */
 public class CalendarFormatter {
@@ -43,18 +42,20 @@ public class CalendarFormatter {
     private static final String SPACED_BULLET = " \u2022 ";
     private final Context mContext;
     private final Locale mLocale;
-    private final Clock mClock;
     private final DateFormat mDateFormat;
+    private final ClockProvider mClockProvider;
+    private final DateTimeFormatter mDateFormatter;
 
-    public CalendarFormatter(Context context, Locale locale, Clock clock) {
+    public CalendarFormatter(Context context, Locale locale, ClockProvider
+        clockProvider) {
         mContext = context;
         mLocale = locale;
-        mClock = clock;
+        mClockProvider = clockProvider;
 
         String pattern =
                 android.text.format.DateFormat.getBestDateTimePattern(mLocale, "EEE, d MMM");
         mDateFormat = new SimpleDateFormat(pattern, mLocale);
-        mDateFormat.setTimeZone(TimeZone.getTimeZone(mClock.getZone()));
+        mDateFormatter = DateTimeFormatter.ofPattern(pattern, mLocale);
     }
 
     /** Formats the given date to text. */
@@ -66,7 +67,7 @@ public class CalendarFormatter {
                         RelativeDateTimeFormatter.Style.LONG,
                         DisplayContext.CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE);
 
-        LocalDate today = LocalDate.now(mClock);
+        LocalDate today = LocalDate.now(mClockProvider.get());
         LocalDate tomorrow = today.plusDays(1);
         LocalDate dayAfter = tomorrow.plusDays(1);
 
@@ -94,9 +95,9 @@ public class CalendarFormatter {
             result.append(SPACED_BULLET);
         }
 
-        ZonedDateTime zonedDateTime = localDate.atStartOfDay(mClock.getZone());
-        Date date = new Date(zonedDateTime.toInstant().toEpochMilli());
-        result.append(mDateFormat.format(date));
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(mClockProvider.get().getZone());
+        result.append(zonedDateTime.format(mDateFormatter));
+
         return result.toString();
     }
 
@@ -109,7 +110,7 @@ public class CalendarFormatter {
                         start.toEpochMilli(),
                         end.toEpochMilli(),
                         FORMAT_SHOW_TIME | FORMAT_NO_YEAR | FORMAT_ABBREV_ALL,
-                        mClock.getZone().getId())
+                        mClockProvider.get().getZone().getId())
                 .toString();
     }
 }
