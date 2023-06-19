@@ -27,6 +27,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -227,10 +228,12 @@ class EventCalendarItem implements CalendarItem {
             mPrimaryActionButton.setImageResource(primaryAction.mIconResourceId);
             if (primaryAction.mOnClickListener != null) {
                 mPrimaryActionButton.setEnabled(true);
+                mPrimaryActionButton.setVisibility(View.VISIBLE);
                 mPrimaryActionButton.setContentDescription(primaryAction.mDescriptionText);
                 mPrimaryActionButton.setOnClickListener(primaryAction.mOnClickListener);
             } else {
                 mPrimaryActionButton.setEnabled(false);
+                mPrimaryActionButton.setVisibility(View.GONE);
                 mPrimaryActionButton.setContentDescription(null);
                 mPrimaryActionButton.setOnClickListener(null);
             }
@@ -238,10 +241,12 @@ class EventCalendarItem implements CalendarItem {
             mSecondaryActionButton.setImageResource(secondaryAction.mIconResourceId);
             if (secondaryAction.mOnClickListener != null) {
                 mSecondaryActionButton.setEnabled(true);
+                mSecondaryActionButton.setVisibility(View.VISIBLE);
                 mSecondaryActionButton.setContentDescription(secondaryAction.mDescriptionText);
                 mSecondaryActionButton.setOnClickListener(secondaryAction.mOnClickListener);
             } else {
                 mSecondaryActionButton.setEnabled(false);
+                mSecondaryActionButton.setVisibility(View.GONE);
                 mSecondaryActionButton.setContentDescription(null);
                 mSecondaryActionButton.setOnClickListener(null);
             }
