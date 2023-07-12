@@ -87,6 +87,7 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
     // This can be updated on the background thread but read from any thread.
     private volatile boolean mValueUpdated;
+    private volatile Instant mLastUpdateTimestamp;
 
     public EventsLiveData(
             ClockProvider clockProvider,
@@ -107,8 +108,15 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         ImmutableList<Event> latest = getEventsUntilTomorrow();
         ImmutableList<Event> current = getValue();
 
+        // Force update the page for start of a day.
+        ZonedDateTime now = ZonedDateTime.now(mClockProvider.get());
+        boolean hasDateChangedBetweenUpdates =
+            mLastUpdateTimestamp == null || (!now.toLocalDate().equals(
+                ZonedDateTime.ofInstant(
+                    mLastUpdateTimestamp, mClockProvider.get().getZone()).toLocalDate()));
+        mLastUpdateTimestamp = now.toInstant();
         // Always post the first value even if it is null.
-        if (!mValueUpdated || !Objects.equals(latest, current)) {
+        if (!mValueUpdated || !Objects.equals(latest, current) || hasDateChangedBetweenUpdates) {
             postValue(latest);
             mValueUpdated = true;
         }
