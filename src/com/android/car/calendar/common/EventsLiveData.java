@@ -38,6 +38,7 @@ import androidx.lifecycle.Observer;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -229,8 +230,14 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
         // If an event is all-day then the times are stored in UTC and must be adjusted.
         if (allDay) {
-            startInstant = utcToDefaultTimeZone(startInstant);
-            endInstant = utcToDefaultTimeZone(endInstant);
+            ZoneId zoneId;
+            try {
+                zoneId = ZoneId.of(text(eventInstancesCursor, Instances.EVENT_TIMEZONE));
+            } catch (DateTimeException ex) {
+                zoneId = ZoneId.of("UTC");
+            }
+            startInstant = convertToDefaultTimeZone(startInstant, zoneId);
+            endInstant = convertToDefaultTimeZone(endInstant, zoneId);
         }
 
         String locationText = text(eventInstancesCursor, Instances.EVENT_LOCATION);
@@ -282,8 +289,9 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         return events;
     }
 
-    private Instant utcToDefaultTimeZone(Instant instant) {
-        return instant.atZone(mClockProvider.get().getZone()).truncatedTo(DAYS).toInstant();
+    private Instant convertToDefaultTimeZone(Instant instant, ZoneId zoneId) {
+        return instant.atZone(zoneId).withZoneSameLocal(mClockProvider.get().getZone())
+            .truncatedTo(DAYS).toInstant();
     }
 
     @Override
