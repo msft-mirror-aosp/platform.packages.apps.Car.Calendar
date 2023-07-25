@@ -45,12 +45,6 @@ android {
         }
     }
 
-    project.gradle.taskGraph.whenReady {
-        connectedFakeDebugAndroidTest{
-            ignoreFailures = true
-        }
-    }
-
     lintOptions {
         abortOnError false
     }
@@ -59,12 +53,6 @@ android {
     productFlavors {
         prod {
             dimension 'devMode'
-            signingConfig signingConfigs.aaos
-        }
-        fake {
-            dimension 'devMode'
-            versionNameSuffix '-fake'
-            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
             signingConfig signingConfigs.aaos
         }
         platform {
@@ -82,11 +70,6 @@ android {
 
         platform {
             java.srcDirs = ['src']
-        }
-
-        androidTestFake {
-            setRoot('tests')
-            java.srcDirs = ['tests']
         }
     }
 
