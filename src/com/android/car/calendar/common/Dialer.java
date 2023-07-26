@@ -44,18 +44,7 @@ public class Dialer {
 
     /** Calls a telephone using a phone number and access number. */
     public boolean dial(NumberAndAccess numberAndAccess) {
-        StringBuilder sb = new StringBuilder(numberAndAccess.getNumber());
-        String access = numberAndAccess.getAccess();
-        if (!Strings.isNullOrEmpty(access)) {
-            // Wait for the number to dial if required.
-            char first = access.charAt(0);
-            if (first != PhoneNumberUtils.PAUSE && first != PhoneNumberUtils.WAIT) {
-                // Insert a wait so the number finishes dialing before using the access code.
-                access = PhoneNumberUtils.WAIT + access;
-            }
-            sb.append(access);
-        }
-        Uri dialUri = Uri.fromParts("tel", sb.toString(), /* fragment= */ null);
+        Uri dialUri = numberAndAccess.getUri();
         PackageManager packageManager = mContext.getPackageManager();
         boolean useActionCall = packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
         Intent intent = new Intent(useActionCall ? Intent.ACTION_CALL : Intent.ACTION_DIAL);
@@ -108,6 +97,23 @@ public class Dialer {
         @Override
         public int hashCode() {
             return Objects.hash(mNumber, mAccess);
+        }
+
+        public Uri getUri() {
+            StringBuilder sb = new StringBuilder(getNumber());
+            String access = getAccess();
+            if (!Strings.isNullOrEmpty(access)) {
+                // Wait for the number to dial if required.
+                if (!access.startsWith(String.valueOf(PhoneNumberUtils.PAUSE))
+                    && !access.startsWith(
+                    String.valueOf(PhoneNumberUtils.WAIT))) {
+                    // Insert a pause as the separator so the dialer automatically adds the access
+                    // code.
+                    access = PhoneNumberUtils.PAUSE + access;
+                }
+                sb.append(access);
+            }
+            return Uri.fromParts("tel", sb.toString(), /* fragment= */ null);
         }
     }
 }

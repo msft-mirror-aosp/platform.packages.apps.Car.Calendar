@@ -20,10 +20,13 @@ import static com.google.common.truth.Truth.assertThat;
 
 import android.content.Context;
 
+import androidx.test.filters.SmallTest;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -31,6 +34,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 
+@SmallTest
+@RunWith(AndroidJUnit4.class)
 public class CalendarFormatterTest {
 
     private static final ZoneId BERLIN_ZONE_ID = ZoneId.of("Europe/Berlin");
@@ -43,7 +48,8 @@ public class CalendarFormatterTest {
     public void setUp() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         Clock clock = Clock.fixed(CURRENT_DATE_TIME.toInstant(), BERLIN_ZONE_ID);
-        mFormatter = new CalendarFormatter(context, LOCALE, clock);
+        ClockProvider testClockProvider = ClockProviderFactory.fixedClockProvider(clock);
+        mFormatter = new CalendarFormatter(context, LOCALE, testClockProvider);
     }
 
     @Test
@@ -75,7 +81,7 @@ public class CalendarFormatterTest {
                 mFormatter.getTimeRangeText(
                         CURRENT_DATE_TIME.toInstant(), CURRENT_DATE_TIME.plusHours(1).toInstant());
 
-        assertThat(dateText).isEqualTo("10:10 – 11:10 AM");
+        assertThat(dateText).matches("10:10.–.11:10.AM");
     }
 
     @Test
@@ -84,7 +90,7 @@ public class CalendarFormatterTest {
                 mFormatter.getTimeRangeText(
                         CURRENT_DATE_TIME.toInstant(), CURRENT_DATE_TIME.plusHours(3).toInstant());
 
-        assertThat(dateText).isEqualTo("10:10 AM – 1:10 PM");
+        assertThat(dateText).matches("10:10.AM.–.1:10.PM");
     }
 
     @Test
@@ -93,6 +99,6 @@ public class CalendarFormatterTest {
                 mFormatter.getTimeRangeText(
                         CURRENT_DATE_TIME.toInstant(), CURRENT_DATE_TIME.plusDays(1).toInstant());
 
-        assertThat(dateText).isEqualTo("Dec 10, 10:10 AM – Dec 11, 10:10 AM");
+        assertThat(dateText).matches("Dec.10,.10:10.AM.–.Dec.11,.10:10.AM");
     }
 }

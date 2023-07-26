@@ -25,6 +25,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModel;
 
+import com.android.car.calendar.common.ClockProvider;
 import com.android.car.calendar.common.EventDescriptions;
 import com.android.car.calendar.common.EventLocations;
 import com.android.car.calendar.common.EventsLiveData;
@@ -37,21 +38,21 @@ class CarCalendarViewModel extends ViewModel {
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     private final HandlerThread mHandlerThread = new HandlerThread("CarCalendarBackground");
-    private final Clock mClock;
     private final ContentResolver mResolver;
     private final Locale mLocale;
     private final TelephonyManager mTelephonyManager;
+    private final ClockProvider mClockProvider;
 
     @Nullable private EventsLiveData mEventsLiveData;
 
-    CarCalendarViewModel(ContentResolver resolver, Locale locale,
-            TelephonyManager telephonyManager, Clock clock) {
+    CarCalendarViewModel(ContentResolver resolver, Locale locale, TelephonyManager telephonyManager,
+        ClockProvider clockProvider) {
         mLocale = locale;
         if (DEBUG) Log.d(TAG, "Creating view model");
         mResolver = resolver;
         mTelephonyManager = telephonyManager;
         mHandlerThread.start();
-        mClock = clock;
+        mClockProvider = clockProvider;
     }
 
     /** Creates an {@link EventsLiveData} lazily and always returns the same instance. */
@@ -59,7 +60,7 @@ class CarCalendarViewModel extends ViewModel {
         if (mEventsLiveData == null) {
             mEventsLiveData =
                     new EventsLiveData(
-                            mClock,
+                            mClockProvider,
                             new Handler(mHandlerThread.getLooper()),
                             mResolver,
                             new EventDescriptions(mLocale, mTelephonyManager),

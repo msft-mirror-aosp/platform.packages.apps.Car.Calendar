@@ -31,6 +31,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.car.calendar.common.CalendarFormatter;
+import com.android.car.calendar.common.ClockProvider;
+import com.android.car.calendar.common.ClockProviderFactory;
 import com.android.car.calendar.common.Dialer;
 import com.android.car.calendar.common.Navigator;
 import com.android.car.ui.core.CarUi;
@@ -63,9 +65,10 @@ public class CarCalendarActivity extends FragmentActivity {
 
         // Tests can set fake dependencies before onCreate.
         if (mDependencies == null) {
+            ClockProvider clockProvider = ClockProviderFactory.systemClockProvider();
             mDependencies = new Dependencies(
                     Locale.getDefault(),
-                    Clock.systemDefaultZone(),
+                    clockProvider,
                     getContentResolver(),
                     getSystemService(TelephonyManager.class));
         }
@@ -77,7 +80,7 @@ public class CarCalendarActivity extends FragmentActivity {
                                         mDependencies.mResolver,
                                         mDependencies.mLocale,
                                         mDependencies.mTelephonyManager,
-                                        mDependencies.mClock))
+                                        mDependencies.mClockProvider))
                         .get(CarCalendarViewModel.class);
 
         CarCalendarView carCalendarView =
@@ -89,7 +92,7 @@ public class CarCalendarActivity extends FragmentActivity {
                         new CalendarFormatter(
                                 this.getApplicationContext(),
                                 mDependencies.mLocale,
-                                mDependencies.mClock));
+                                mDependencies.mClockProvider));
 
         carCalendarView.show();
     }
@@ -154,42 +157,43 @@ public class CarCalendarActivity extends FragmentActivity {
         private final ContentResolver mResolver;
         private final TelephonyManager mTelephonyManager;
         private final Locale mLocale;
-        private final Clock mClock;
+        private final ClockProvider mClockProvider;
 
         CarCalendarViewModelFactory(
                 ContentResolver resolver,
                 Locale locale,
                 TelephonyManager telephonyManager,
-                Clock clock) {
+                ClockProvider clockProvider) {
             mResolver = resolver;
             mLocale = locale;
             mTelephonyManager = telephonyManager;
-            mClock = clock;
+            mClockProvider = clockProvider;
         }
 
         @SuppressWarnings("unchecked")
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> aClass) {
-            return (T) new CarCalendarViewModel(mResolver, mLocale, mTelephonyManager, mClock);
+            return (T) new CarCalendarViewModel(mResolver, mLocale, mTelephonyManager,
+                mClockProvider);
         }
     }
 
     static class Dependencies {
         private final Locale mLocale;
-        private final Clock mClock;
         private final ContentResolver mResolver;
         private final TelephonyManager mTelephonyManager;
+        private final ClockProvider mClockProvider;
 
         Dependencies(
                 Locale locale,
-                Clock clock,
+                ClockProvider clockProvider,
                 ContentResolver resolver,
                 TelephonyManager telephonyManager) {
             mLocale = locale;
-            mClock = clock;
             mResolver = resolver;
             mTelephonyManager = telephonyManager;
+            mClockProvider = clockProvider;
         }
     }
 }

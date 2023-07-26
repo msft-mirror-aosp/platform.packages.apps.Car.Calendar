@@ -38,7 +38,7 @@ import androidx.lifecycle.Observer;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
-import java.time.Clock;
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -62,6 +62,9 @@ import javax.annotation.Nullable;
 public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
     private static final String TAG = "CarCalendarEventsLiveData";
+
+    /** Arbitrary data defined by Calendar Sync feature. */
+    private static final int DAYS_TO_SYNC = 3;
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     // The duration to delay before updating the value to reduce the frequency of changes.
@@ -71,7 +74,7 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
     private static final Comparator<Event> EVENT_COMPARATOR =
             Comparator.comparing(Event::getDayStartInstant).thenComparing(Event::getTitle);
 
-    private final Clock mClock;
+    private final ClockProvider mClockProvider;
     private final Handler mBackgroundHandler;
     private final ContentResolver mContentResolver;
     private final EventDescriptions mEventDescriptions;
@@ -85,14 +88,15 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
     // This can be updated on the background thread but read from any thread.
     private volatile boolean mValueUpdated;
+    private volatile Instant mLastUpdateTimestamp;
 
     public EventsLiveData(
-            Clock clock,
+            ClockProvider clockProvider,
             Handler backgroundHandler,
             ContentResolver contentResolver,
             EventDescriptions eventDescriptions,
             EventLocations locations) {
-        mClock = clock;
+        mClockProvider = clockProvider;
         mBackgroundHandler = backgroundHandler;
         mContentResolver = contentResolver;
         mEventDescriptions = eventDescriptions;
@@ -105,8 +109,15 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         ImmutableList<Event> latest = getEventsUntilTomorrow();
         ImmutableList<Event> current = getValue();
 
+        // Force update the page for start of a day.
+        ZonedDateTime now = ZonedDateTime.now(mClockProvider.get());
+        boolean hasDateChangedBetweenUpdates =
+            mLastUpdateTimestamp == null || (!now.toLocalDate().equals(
+                ZonedDateTime.ofInstant(
+                    mLastUpdateTimestamp, mClockProvider.get().getZone()).toLocalDate()));
+        mLastUpdateTimestamp = now.toInstant();
         // Always post the first value even if it is null.
-        if (!mValueUpdated || !Objects.equals(latest, current)) {
+        if (!mValueUpdated || !Objects.equals(latest, current) || hasDateChangedBetweenUpdates) {
             postValue(latest);
             mValueUpdated = true;
         }
@@ -122,11 +133,12 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
             tearDownCursor();
         }
 
-        ZonedDateTime now = ZonedDateTime.now(mClock);
+        ZonedDateTime now = ZonedDateTime.now(mClockProvider.get());
 
         // Find all events in the current day to include any all-day events.
         ZonedDateTime startDateTime = now.truncatedTo(DAYS);
-        ZonedDateTime endDateTime = startDateTime.plusDays(2).truncatedTo(ChronoUnit.DAYS);
+        ZonedDateTime endDateTime = startDateTime.plusDays(DAYS_TO_SYNC)
+            .truncatedTo(ChronoUnit.DAYS);
 
         // Always create the cursor so we can observe it for changes to events.
         mEventsCursor = createEventsCursor(startDateTime, endDateTime);
@@ -218,8 +230,14 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
 
         // If an event is all-day then the times are stored in UTC and must be adjusted.
         if (allDay) {
-            startInstant = utcToDefaultTimeZone(startInstant);
-            endInstant = utcToDefaultTimeZone(endInstant);
+            ZoneId zoneId;
+            try {
+                zoneId = ZoneId.of(text(eventInstancesCursor, Instances.EVENT_TIMEZONE));
+            } catch (DateTimeException ex) {
+                zoneId = ZoneId.of("UTC");
+            }
+            startInstant = convertToDefaultTimeZone(startInstant, zoneId);
+            endInstant = convertToDefaultTimeZone(endInstant, zoneId);
         }
 
         String locationText = text(eventInstancesCursor, Instances.EVENT_LOCATION);
@@ -250,7 +268,7 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         // Add an Event for each day of events that span multiple days.
         List<Event> events = new ArrayList<>();
         Instant dayStartInstant =
-                startInstant.atZone(mClock.getZone()).truncatedTo(DAYS).toInstant();
+                startInstant.atZone(mClockProvider.get().getZone()).truncatedTo(DAYS).toInstant();
         Instant dayEndInstant;
         do {
             dayEndInstant = dayStartInstant.plus(1, DAYS);
@@ -271,8 +289,9 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         return events;
     }
 
-    private Instant utcToDefaultTimeZone(Instant instant) {
-        return instant.atZone(ZoneId.of("UTC")).withZoneSameLocal(mClock.getZone()).toInstant();
+    private Instant convertToDefaultTimeZone(Instant instant, ZoneId zoneId) {
+        return instant.atZone(zoneId).withZoneSameLocal(mClockProvider.get().getZone())
+            .truncatedTo(DAYS).toInstant();
     }
 
     @Override
@@ -296,7 +315,7 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         if (DEBUG) Log.d(TAG, "Update and schedule");
         if (hasActiveObservers()) {
             updateIfChanged();
-            ZonedDateTime now = ZonedDateTime.now(mClock);
+            ZonedDateTime now = ZonedDateTime.now(mClockProvider.get());
             ZonedDateTime truncatedNowTime = now.truncatedTo(MINUTES);
             ZonedDateTime updateTime = truncatedNowTime.plus(1, MINUTES);
             long delayMs = updateTime.toInstant().toEpochMilli() - now.toInstant().toEpochMilli();

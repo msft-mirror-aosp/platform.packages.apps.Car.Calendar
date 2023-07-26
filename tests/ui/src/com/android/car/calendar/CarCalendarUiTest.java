@@ -50,6 +50,7 @@ import androidx.test.runner.lifecycle.ActivityLifecycleCallback;
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import androidx.test.runner.lifecycle.Stage;
 
+import com.android.car.calendar.common.ClockProviderFactory;
 import com.android.car.calendar.common.Event;
 import com.android.car.calendar.common.EventsLiveData;
 
@@ -129,8 +130,9 @@ public class CarCalendarUiTest {
                 new TestCalendarContentProvider(context);
         mockContentResolver.addProvider(CalendarContract.AUTHORITY, testCalendarContentProvider);
         activity.mDependencies =
-                new CarCalendarActivity.Dependencies(LOCALE, fixedTimeClock, mockContentResolver,
-                        activity.getSystemService(TelephonyManager.class));
+                new CarCalendarActivity.Dependencies(LOCALE,
+                    ClockProviderFactory.fixedClockProvider(fixedTimeClock), mockContentResolver,
+                    activity.getSystemService(TelephonyManager.class));
     }
 
     private void observeEventsLiveData(CarCalendarActivity activity) {
