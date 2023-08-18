@@ -73,6 +73,7 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
     // Sort events by start date and title.
     private static final Comparator<Event> EVENT_COMPARATOR =
             Comparator.comparing(Event::getDayStartInstant).thenComparing(Event::getTitle);
+    private static final String UTC_ZONE_ID = "UTC";
 
     private final ClockProvider mClockProvider;
     private final Handler mBackgroundHandler;
@@ -232,9 +233,13 @@ public class EventsLiveData extends LiveData<ImmutableList<Event>> {
         if (allDay) {
             ZoneId zoneId;
             try {
-                zoneId = ZoneId.of(text(eventInstancesCursor, Instances.EVENT_TIMEZONE));
+                // iOS system does not give a zone ID for an all-day event so we assign a default
+                // zone ID when it is null.
+                zoneId = ZoneId.of(
+                    Objects.requireNonNullElse(text(eventInstancesCursor, Instances.EVENT_TIMEZONE),
+                        UTC_ZONE_ID));
             } catch (DateTimeException ex) {
-                zoneId = ZoneId.of("UTC");
+                zoneId = ZoneId.of(UTC_ZONE_ID);
             }
             startInstant = convertToDefaultTimeZone(startInstant, zoneId);
             endInstant = convertToDefaultTimeZone(endInstant, zoneId);
