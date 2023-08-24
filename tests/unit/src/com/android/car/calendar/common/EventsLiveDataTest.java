@@ -92,14 +92,15 @@ public class EventsLiveDataTest {
             GrantPermissionRule.grant(Manifest.permission.READ_CALENDAR);
 
     private EventsLiveData mEventsLiveData;
+    private TestClock mTestClock;
     private TestContentProvider mTestContentProvider;
     private TestHandler mTestHandler;
-    private TestClock mTestClock;
 
     @Before
     public void setUp() {
         mTestClock = new TestClock(BERLIN_ZONE_ID);
         mTestClock.setTime(CURRENT_DATE_TIME);
+        ClockProvider mTestClockProvider = ClockProviderFactory.fixedClockProvider(mTestClock);
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         // Create a fake result for the calendar content provider.
@@ -117,7 +118,7 @@ public class EventsLiveDataTest {
         mTestHandler = TestHandler.create();
         mEventsLiveData =
                 new EventsLiveData(
-                        mTestClock,
+                    mTestClockProvider,
                         mTestHandler,
                         mockContentResolver,
                         mockEventDescriptions,
@@ -549,9 +550,9 @@ public class EventsLiveDataTest {
 
         static TestHandler create() {
             HandlerThread thread =
-                    new HandlerThread(
-                            EventsLiveDataTest.class.getSimpleName(),
-                            Process.THREAD_PRIORITY_FOREGROUND);
+                new HandlerThread(
+                    EventsLiveDataTest.class.getSimpleName(),
+                    Process.THREAD_PRIORITY_FOREGROUND);
             thread.start();
             return new TestHandler(thread);
         }
