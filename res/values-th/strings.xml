@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"ปฏิทิน"</string>
     <string name="no_dialler" msgid="1448265958659890310">"ไม่มีแอปโทรศัพท์"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"ไม่มีแอปนำทางที่พร้อมใช้งาน"</string>
     <string name="no_events" msgid="2454460886004475314">"ไม่มีกิจกรรมที่กำหนดเวลาไว้ คุณว่างอยู่"</string>
     <string name="no_calendars" msgid="5059614627806215716">"ปฏิทินอาจกำลังเริ่มทำงาน หรือคุณอาจต้องตรวจสอบการตั้งค่าในแอปที่ใช้ร่วมกัน"</string>
     <string name="all_day_event" msgid="5817490740700803034">"ตลอดวัน"</string>

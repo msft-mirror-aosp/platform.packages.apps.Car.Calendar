@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Calendar"</string>
     <string name="no_dialler" msgid="1448265958659890310">"কোনও ডায়ালার নেই"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"কোনও নেভিগেশন অ্যাপ উপলভ্য নেই"</string>
     <string name="no_events" msgid="2454460886004475314">"কোনও ইভেন্ট শিডিউল করা নেই। আপনার কাছে করার মতো কিছু নেই!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Calender শুরু হতে পারে, বা আপনাকে কম্প্যানিয়ন অ্যাপে গিয়ে আপনার সেটিংস চেক করে দেখে নিতে হবে"</string>
     <string name="all_day_event" msgid="5817490740700803034">"সারাদিন"</string>

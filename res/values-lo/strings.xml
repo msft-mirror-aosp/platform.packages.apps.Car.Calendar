@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"ປະຕິທິນ"</string>
     <string name="no_dialler" msgid="1448265958659890310">"ບໍ່ມີແປ້ນໂທທີ່ພ້ອມນຳໃຊ້"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"ບໍ່ມີແອັບການນຳທາງທີ່ພ້ອມໃຫ້ນຳໃຊ້"</string>
     <string name="no_events" msgid="2454460886004475314">"ບໍ່ມີເຫດການທີ່ກຳນົດເວລາໄວ້. ທ່ານຫວ່າງຢູ່!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"ປະຕິທິນອາດຈະກຳລັງເລີ່ມເຮັດວຽກ ຫຼື ທ່ານອາດຈະຈຳເປັນຕ້ອງກວດການຕັ້ງຄ່າຂອງທ່ານໃນແອັບທີ່ໃຊ້ຮ່ວມກັນ"</string>
     <string name="all_day_event" msgid="5817490740700803034">"ໝົດມື້"</string>

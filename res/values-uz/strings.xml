@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Taqvim"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Chaqiruv uchun ilova yoʻq"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Navigatsiya ilovasi yoʻq"</string>
     <string name="no_events" msgid="2454460886004475314">"Rejalashtirilgan tadbirlar yoʻq. Siz mutlaqo boʻshsiz!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Taqvim ochilishini kuting yoki hamroh ilova sozlamalarini tekshiring"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Butun kun"</string>

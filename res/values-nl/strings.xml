@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Agenda"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Geen kiezer beschikbaar"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Geen navigatie-app beschikbaar"</string>
     <string name="no_events" msgid="2454460886004475314">"Geen geplande afspraken. Je bent beschikbaar."</string>
     <string name="no_calendars" msgid="5059614627806215716">"Misschien wordt Agenda nog geopend of moet je je instellingen checken in de bijbehorende app"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Hele dag"</string>

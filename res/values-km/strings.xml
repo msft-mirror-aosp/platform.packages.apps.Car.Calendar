@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"ប្រតិទិន"</string>
     <string name="no_dialler" msgid="1448265958659890310">"គ្មានផ្ទាំងចុចហៅ​ទូរសព្ទទេ"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"មិនមានកម្មវិធីរុករកទេ"</string>
     <string name="no_events" msgid="2454460886004475314">"គ្មាន​ព្រឹត្តិការណ៍​ដែលបានកំណត់កាលវិភាគទេ។ អ្នកមិនជាប់រវល់ទេ!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"ប្រតិទិនប្រហែលជាកំពុងចាប់ផ្ដើម ឬអ្នកប្រហែលជាត្រូវពិនិត្យមើលការកំណត់របស់អ្នកនៅក្នុងកម្មវិធី​ដៃគូ"</string>
     <string name="all_day_event" msgid="5817490740700803034">"ពេញមួយថ្ងៃ"</string>
