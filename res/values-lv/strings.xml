@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Kalendārs"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Nav numura sastādītāju"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Nav navigācijas lietotņu"</string>
     <string name="no_events" msgid="2454460886004475314">"Nav ieplānotu pasākumu. Jūs esat brīvs!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Iespējams, notiek kalendāra palaišana, vai arī jums ir jāpārbauda iestatījumi palīglietotnē."</string>
     <string name="all_day_event" msgid="5817490740700803034">"Visu dienu"</string>

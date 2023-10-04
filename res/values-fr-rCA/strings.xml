@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Agenda"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Aucun composeur n\'est accessible"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Appli navigation indisponible"</string>
     <string name="no_events" msgid="2454460886004475314">"Aucun événement prévu. Vous êtes disponible!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"L\'agenda pourrait démarrer, ou vous devez peut-être vérifier vos paramètres dans l\'application compagnon"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Toute la journée"</string>

@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"تقویم"</string>
     <string name="no_dialler" msgid="1448265958659890310">"برنامه شماره‌گیر دردسترس نیست"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"هیچ برنامه ناوبری دردسترس نیست"</string>
     <string name="no_events" msgid="2454460886004475314">"هیچ رویدادی زمان‌بندی نشده است. شما آزادید!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"ممکن است «تقویم» درحال راه‌اندازی باشد، یا شاید لازم باشد تنظیمات خود را در «برنامه همراه» بررسی کنید"</string>
     <string name="all_day_event" msgid="5817490740700803034">"تمام روز"</string>

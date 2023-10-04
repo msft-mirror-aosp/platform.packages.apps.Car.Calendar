@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"カレンダー"</string>
     <string name="no_dialler" msgid="1448265958659890310">"電話を使用できません"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"ナビアプリがありません"</string>
     <string name="no_events" msgid="2454460886004475314">"予定されているスケジュールはありません。特に予定はありません。"</string>
     <string name="no_calendars" msgid="5059614627806215716">"カレンダーが起動中の可能性があります。問題が解決しない場合は、コンパニオン アプリの設定を確認してみてください。"</string>
     <string name="all_day_event" msgid="5817490740700803034">"終日"</string>

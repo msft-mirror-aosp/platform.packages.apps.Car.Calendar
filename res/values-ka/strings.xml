@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"კალენდარი"</string>
     <string name="no_dialler" msgid="1448265958659890310">"დარეკვის აპი არ არის"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"ნავიგაციის აპი არ არის ხელმისაწვდომი"</string>
     <string name="no_events" msgid="2454460886004475314">"განრიგში მოვლენები არ არის. თავისუფალი ხართ!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"კალენდარი შეიძლება იწყებოდეს, ან შესაძლოა, კომპანიონი აპის პარამეტრების შემოწმება დაგჭირდეთ"</string>
     <string name="all_day_event" msgid="5817490740700803034">"მთელი დღე"</string>

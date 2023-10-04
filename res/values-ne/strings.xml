@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"पात्रो"</string>
     <string name="no_dialler" msgid="1448265958659890310">"कुनै डायलर उपलब्ध छैन"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"नेभिगेसन गर्ने एप उपलब्ध छैन"</string>
     <string name="no_events" msgid="2454460886004475314">"समय तोकिएको कुनै कार्यक्रम छैन। तपाईं कुनै अरू काम गर्न सक्नुहुन्छ!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"पात्रो लोड भइरहेको हुन सक्छ वा तपाईंले सहयोगी एपमा गई सेटिङ जाँच्नु पर्ने हुन सक्छ"</string>
     <string name="all_day_event" msgid="5817490740700803034">"दिनभरि"</string>

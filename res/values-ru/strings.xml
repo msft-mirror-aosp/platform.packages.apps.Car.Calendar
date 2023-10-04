@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Календарь"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Нет приложений для звонков."</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Нет приложений для навигации."</string>
     <string name="no_events" msgid="2454460886004475314">"Запланированных мероприятий нет. Вы совершенно свободны!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Подождите, пока календарь откроется, или проверьте настройки сопутствующего приложения."</string>
     <string name="all_day_event" msgid="5817490740700803034">"Весь день"</string>

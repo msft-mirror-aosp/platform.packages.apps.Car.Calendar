@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"日历"</string>
     <string name="no_dialler" msgid="1448265958659890310">"没有可用的拨号器"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"没有可用的导航应用"</string>
     <string name="no_events" msgid="2454460886004475314">"没有预先安排的活动。您目前空闲！"</string>
     <string name="no_calendars" msgid="5059614627806215716">"日历可能正在启动，您也可能需要检查配套应用中的设置"</string>
     <string name="all_day_event" msgid="5817490740700803034">"全天"</string>

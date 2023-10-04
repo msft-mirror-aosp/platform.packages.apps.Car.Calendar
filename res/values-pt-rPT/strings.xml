@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Calendário"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Nenhum telefone disponível"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Sem apps de navegação"</string>
     <string name="no_events" msgid="2454460886004475314">"Nenhum evento agendado. Está livre!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"O Calendário pode estar a iniciar ou pode ter de verificar as suas definições na app associada."</string>
     <string name="all_day_event" msgid="5817490740700803034">"Todo o dia"</string>
