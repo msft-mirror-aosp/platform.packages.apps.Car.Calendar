@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Naptár"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Nem áll rendelkezésre tárcsázó"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Nem található navigációs app"</string>
     <string name="no_events" msgid="2454460886004475314">"Nincsenek ütemezett események. Ön szabad!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"A Naptár indítás alatt áll, vagy lehetséges, hogy ellenőriznie kell a társalkalmazás beállításait"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Egész nap"</string>

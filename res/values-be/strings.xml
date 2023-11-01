@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Каляндар"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Набіральнік нумара недаступны"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Праграм для навігацыі няма"</string>
     <string name="no_events" msgid="2454460886004475314">"Няма запланаваных падзей. Вы свабодныя!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Магчыма, каляндар яшчэ запускаецца або вам трэба праверыць налады ў спадарожнай праграме"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Увесь дзень"</string>

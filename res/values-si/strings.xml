@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"දින දර්ශනය"</string>
     <string name="no_dialler" msgid="1448265958659890310">"ඩයලර් කිසිවක් ලබා ගත නොහැකිය"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"සංචාලන යෙදුමක් නොමැත"</string>
     <string name="no_events" msgid="2454460886004475314">"කාලසටහන්ගත සිදුවීම් නැත. ඔබ නිදහස්!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"දින දර්ශනය ආරම්භ වෙමින් තිබිය හැකිය, නැතහොත් ඔබට සහකාර යෙදුමේ ඔබගේ සැකසීම් පරීක්ෂා කිරීමට අවශ්‍ය විය හැකිය"</string>
     <string name="all_day_event" msgid="5817490740700803034">"දවස පුරා"</string>

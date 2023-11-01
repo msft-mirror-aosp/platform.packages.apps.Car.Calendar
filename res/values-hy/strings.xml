@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Օրացույց"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Համարի հավաքումն անհասանելի է"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Նավիգացիայի հավելված չկա"</string>
     <string name="no_events" msgid="2454460886004475314">"Պլանավորված միջոցառումներ չկան։ Դուք ազատ եք։"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Սպասեք, մինչև օրացույցը բացվի, կամ ստուգեք ուղեկցող հավելվածի կարգավորումները։"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Ամբողջ օրը"</string>

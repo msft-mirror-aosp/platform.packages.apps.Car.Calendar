@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Takvim"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Kullanılabilir numara çevirici yok"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Rota izleme uygulaması yok"</string>
     <string name="no_events" msgid="2454460886004475314">"Programlanmış etkinlik yok. Serbestsiniz."</string>
     <string name="no_calendars" msgid="5059614627806215716">"Takvim başlatılıyor olabilir ya da Tamamlayıcı Uygulama\'daki ayarlarınızı kontrol etmeniz gerekebilir"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Tüm gün"</string>

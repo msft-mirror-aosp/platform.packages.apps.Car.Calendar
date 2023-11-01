@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Ημερολόγιο"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Δεν υπάρχει διαθέσιμο dialer."</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Δεν υπάρχει εφαρμογή πλοήγησης"</string>
     <string name="no_events" msgid="2454460886004475314">"Δεν υπάρχουν προγραμματισμένα συμβάντα. Είστε ελεύθεροι!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Μπορεί να γίνεται εκκίνηση του ημερολογίου ή μπορεί χρειαστεί να ελέγξετε τις ρυθμίσεις σας στη συνοδευτική εφαρμογή."</string>
     <string name="all_day_event" msgid="5817490740700803034">"Ολοήμερο"</string>

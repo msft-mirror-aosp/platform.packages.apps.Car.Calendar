@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Calendar"</string>
     <string name="no_dialler" msgid="1448265958659890310">"कोणतेही डायलर उपलब्ध नाही"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"नेव्हिगेशन अ‍ॅप उपलब्ध नाही"</string>
     <string name="no_events" msgid="2454460886004475314">"कोणत्याही शेड्युल केलेले इव्‍हेंट नाहीत. तुम्ही मोकळे आहात!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"Calendar सुरू होत असावे किंवा तुम्हाला तुमच्या सहयोगी अ‍ॅप मधील सेटिंग्ज तपासणे आवश्यक असू शकते"</string>
     <string name="all_day_event" msgid="5817490740700803034">"पूर्ण दिवस"</string>

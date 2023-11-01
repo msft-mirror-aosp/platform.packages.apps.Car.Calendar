@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Kalender"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Ingen app för uppringning"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Det finns ingen navigeringsapp"</string>
     <string name="no_events" msgid="2454460886004475314">"Inga schemalagda händelser. Du är ledig."</string>
     <string name="no_calendars" msgid="5059614627806215716">"Kalender kanske startar eller så måste du kontrollera inställningarna i den tillhörande appen"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Heldag"</string>

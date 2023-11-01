@@ -18,6 +18,7 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name" msgid="1756632159204796305">"Календар"</string>
     <string name="no_dialler" msgid="1448265958659890310">"Нема достапен бирач"</string>
+    <string name="no_navigator" msgid="6558837436079107274">"Нема апликација за навигација"</string>
     <string name="no_events" msgid="2454460886004475314">"Нема закажани настани. Слободни сте!"</string>
     <string name="no_calendars" msgid="5059614627806215716">"„Календарот“ можеби се стартува или ќе треба да ги проверите поставките во придружната апликација"</string>
     <string name="all_day_event" msgid="5817490740700803034">"Цел ден"</string>
