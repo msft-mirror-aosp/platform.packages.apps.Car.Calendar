@@ -32,7 +32,7 @@ android_test {
         "androidx.test.rules",
         "androidx.test.runner",
         "mockito-target",
-        "truth-prebuilt",
+        "truth",
     ],
     libs: [
         "android.test.base.stubs",
