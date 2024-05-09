@@ -19,6 +19,8 @@ package {
 
 android_test {
     name: "CarCalendarUnitTests",
+    min_sdk_version: "23",
+    target_sdk_version: "31",
     srcs: ["src/**/*.java"],
     instrumentation_for: "CarCalendarApp",
     optimize: {
