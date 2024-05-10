@@ -19,6 +19,7 @@ package {
 
 android_app {
     name: "CarCalendarApp",
+    certificate: ":com-android-car-apps-test",
     srcs: ["src/**/*.java"],
     resource_dirs: ["res"],
     sdk_version: "current",

@@ -19,6 +19,7 @@ package {
 
 android_test {
     name: "CarCalendarUnitTests",
+    certificate: ":com-android-car-apps-test",
     min_sdk_version: "23",
     target_sdk_version: "31",
     srcs: ["src/**/*.java"],
