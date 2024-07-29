@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.application'
-apply plugin: 'jacoco'
+plugins {
+    id 'com.android.application'
+    id 'jacoco'
+}
 
 android {
     namespace = "com.android.car.calendar"
