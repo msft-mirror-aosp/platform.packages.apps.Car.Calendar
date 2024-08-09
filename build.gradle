@@ -17,6 +17,7 @@
 plugins {
     id 'com.android.application'
     id 'jacoco'
+    id 'buildSrc.jdk.jdk8'
 }
 
 android {
@@ -72,11 +73,6 @@ android {
 
         androidTest.setRoot('tests')
         androidTest.java.srcDirs = ['tests/unit/src', 'tests/ui/src']
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     testOptions {
