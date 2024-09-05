@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.application'
-apply plugin: 'jacoco'
+plugins {
+    id 'com.android.application'
+    id 'jacoco'
+    id 'buildSrc.jdk.jdk8'
+}
 
 android {
     namespace = "com.android.car.calendar"
@@ -25,7 +28,7 @@ android {
     defaultConfig {
         applicationId 'com.android.car.calendar'
         minSdkVersion 28
-        targetSdkVersion gradle.ext.aaosTargetSDK
+        targetSdkVersion 33
         testInstrumentationRunnerArguments clearPackageData: 'true', coverage: 'true'
         versionCode gradle.ext.getVersionCode()
         versionName gradle.ext.getVersionName()
@@ -70,11 +73,6 @@ android {
 
         androidTest.setRoot('tests')
         androidTest.java.srcDirs = ['tests/unit/src', 'tests/ui/src']
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     testOptions {
