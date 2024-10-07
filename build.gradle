@@ -17,13 +17,13 @@
 plugins {
     id 'com.android.application'
     id 'jacoco'
+    id 'aaosApps.buildLogic'
     id 'buildSrc.jdk.jdk8'
 }
 
 android {
     namespace = "com.android.car.calendar"
 
-    compileSdkVersion gradle.ext.aaosLatestSDK
 
     defaultConfig {
         applicationId 'com.android.car.calendar'
