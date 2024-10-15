@@ -28,7 +28,7 @@ android {
     defaultConfig {
         applicationId 'com.android.car.calendar'
         minSdkVersion 28
-        targetSdkVersion 33
+        targetSdkVersion 34
         testInstrumentationRunnerArguments clearPackageData: 'true', coverage: 'true'
         versionCode gradle.ext.getVersionCode()
         versionName gradle.ext.getVersionName()
