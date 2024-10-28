@@ -18,7 +18,6 @@ plugins {
     id 'com.android.application'
     id 'jacoco'
     id 'aaosApps.buildLogic'
-    id 'buildSrc.jdk.jdk8'
 }
 
 android {
