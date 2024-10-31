@@ -21,7 +21,7 @@ android_test {
     name: "CarCalendarUnitTests",
     certificate: ":com-android-car-apps-test",
     min_sdk_version: "23",
-    target_sdk_version: "31",
+    target_sdk_version: "34",
     srcs: ["src/**/*.java"],
     instrumentation_for: "CarCalendarApp",
     optimize: {

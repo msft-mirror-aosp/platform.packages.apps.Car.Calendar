@@ -17,50 +17,37 @@
 plugins {
     id 'com.android.application'
     id 'jacoco'
+    id 'aaosApps.buildLogic'
     id 'buildSrc.jdk.jdk8'
 }
 
 android {
     namespace = "com.android.car.calendar"
 
-    compileSdkVersion gradle.ext.aaosLatestSDK
 
     defaultConfig {
         applicationId 'com.android.car.calendar'
         minSdkVersion 28
-        targetSdkVersion 33
+        targetSdkVersion 34
         testInstrumentationRunnerArguments clearPackageData: 'true', coverage: 'true'
         versionCode gradle.ext.getVersionCode()
         versionName gradle.ext.getVersionName()
     }
 
     signingConfigs {
-        aaos {
-            storeFile file(gradle.ext.aaosCertPath)
+        unbundled {
+            storeFile file(gradle.ext.unbundledCertPath)
             storePassword 'carapps'
             keyAlias 'carapps'
             keyPassword 'carapps'
-        }
-
-        platform {
-            storeFile file(gradle.ext.platformCertPath)
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
         }
     }
 
     flavorDimensions 'devMode'
     productFlavors {
-        prod {
+        unbundled {
             dimension 'devMode'
-            signingConfig signingConfigs.aaos
-        }
-
-        platform {
-            dimension 'devMode'
-            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-            signingConfig signingConfigs.platform
+            signingConfig signingConfigs.unbundled
         }
     }
 
