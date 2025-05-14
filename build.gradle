@@ -29,8 +29,6 @@ android {
         minSdkVersion 28
         targetSdkVersion 34
         testInstrumentationRunnerArguments clearPackageData: 'true', coverage: 'true'
-        versionCode gradle.ext.getVersionCode()
-        versionName gradle.ext.getVersionName()
     }
 
     signingConfigs {
